@@ -5,7 +5,6 @@ public class RegularUser extends User{
         super(firstName, lastName, email, password, isAdmin);
     }
 
-    public void register(){}
     public void logWorkout(){}
     public void viewLoggedWorkouts(){}
 }

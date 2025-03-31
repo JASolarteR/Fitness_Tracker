@@ -3,7 +3,7 @@ package com.globant.users;
 import java.util.UUID;
 
 public class User {
-    private final UUID id;
+    private final String id;
     private String firstName;
     private String lastName;
     private String email;
@@ -11,7 +11,7 @@ public class User {
     private boolean isAdmin;
 
     public User(String firstName, String lastName, String email, String password, boolean isAdmin) {
-        this.id = UUID.randomUUID();
+        this.id = UUID.randomUUID().toString();
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -19,7 +19,17 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
-    public void login(){}
+    public String getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 
     @Override
     public String toString() {
