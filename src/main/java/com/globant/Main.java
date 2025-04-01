@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         int optionSelected;
         do {
-            System.out.println("Welcome to the Personal Fitness Tracker!");
+            titleGenerator("Welcome to the Personal Fitness Tracker!");
             System.out.println("1. Register");
             System.out.println("2. Login");
             System.out.println("3. Exit");
@@ -44,7 +44,10 @@ public class Main {
                 String loginEmail = scanner.nextLine();
                 System.out.println("Enter your password: ");
                 String loginPassword = scanner.nextLine();
-                userRepo.loginUser(loginEmail, loginPassword);
+                boolean isUserLoggedIn = userRepo.loginUser(loginEmail, loginPassword);
+                if (isUserLoggedIn) {
+                    regularUserMenu();
+                }
                 break;
             case 3:
                 System.out.println("See you later!");
@@ -52,9 +55,33 @@ public class Main {
         }
     }
 
-    public static void titleGenerator(String title){
+    public static void regularUserMenu() {
+        titleGenerator("Hello", "Juan");
+        System.out.println("""
+                1. Show Workouts\s
+                   - View the list of available workouts and see detailed structures
+                """);
+        System.out.println("""
+                2. Log Workout\s
+                   - Select a workout you have performed and enter the time taken in each exercise
+                """);
+        System.out.println("""
+                3. View Logged Workouts\s
+                   - Review your workout history, including details and total time
+                """);
+        System.out.println("Please select an option: ");
+        int command = scanner.nextInt();
+    }
+
+    public static void titleGenerator(String title) {
         System.out.println("-----------------------");
         System.out.println(title);
+        System.out.println("-----------------------");
+    }
+
+    public static void titleGenerator(String title, String userName) {
+        System.out.println("-----------------------");
+        System.out.printf("%s, %s \n", title, userName);
         System.out.println("-----------------------");
     }
 }
