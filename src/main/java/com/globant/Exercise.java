@@ -4,12 +4,10 @@ public class Exercise {
     String title;
     int reps;
     int sets;
-    int totalTime;
 
-    public Exercise(String title, int reps, int sets, int totalTime) {
+    public Exercise(String title, int reps, int sets) {
         this.title = title;
         this.reps = reps;
         this.sets = sets;
-        this.totalTime = totalTime;
     }
 }
