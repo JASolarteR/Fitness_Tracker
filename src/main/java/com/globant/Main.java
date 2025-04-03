@@ -58,8 +58,9 @@ public class Main {
 
     public static void regularUserMenu() {
         int command;
+        var activeUser = userRepo.getActiveUser();
         do {
-            titleGenerator("Hello", "Juan");
+            titleGenerator("Hello", activeUser.getFirstName() + " " + activeUser.getLastName());
             System.out.println("""
                     1. Show Workouts\s
                        - View the list of available workouts and see detailed structures

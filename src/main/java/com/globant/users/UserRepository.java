@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserRepository {
-    Map<String, User> users;
+    private Map<String, User> users;
+    private User activeUser;
 
     public UserRepository() {
         users = new HashMap<>();
@@ -38,7 +39,12 @@ public class UserRepository {
             return false;
         }
         System.out.println("Login was successful!");
+        activeUser = users.get(email);
         return true;
+    }
+
+    public User getActiveUser() {
+        return activeUser;
     }
 
     public boolean validatePassword(String password) {
