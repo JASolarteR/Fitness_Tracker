@@ -30,6 +30,14 @@ public class Workout {
     }
 
     public void addExercise(Exercise exercise){
+        exercises.add(exercise);
+    }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

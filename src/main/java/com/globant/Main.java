@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static UserRepository userRepo = new UserRepository();
+    private static WorkoutRepository workoutRepo = new WorkoutRepository();
 
     public static void main(String[] args) {
         int optionSelected;
@@ -56,21 +57,39 @@ public class Main {
     }
 
     public static void regularUserMenu() {
-        titleGenerator("Hello", "Juan");
-        System.out.println("""
-                1. Show Workouts\s
-                   - View the list of available workouts and see detailed structures
-                """);
-        System.out.println("""
-                2. Log Workout\s
-                   - Select a workout you have performed and enter the time taken in each exercise
-                """);
-        System.out.println("""
-                3. View Logged Workouts\s
-                   - Review your workout history, including details and total time
-                """);
-        System.out.println("Please select an option: ");
-        int command = scanner.nextInt();
+        int command;
+        do {
+            titleGenerator("Hello", "Juan");
+            System.out.println("""
+                    1. Show Workouts\s
+                       - View the list of available workouts and see detailed structures
+                    """);
+            System.out.println("""
+                    2. Log Workout\s
+                       - Select a workout you have performed and enter the time taken in each exercise
+                    """);
+            System.out.println("""
+                    3. View Logged Workouts\s
+                       - Review your workout history, including details and total time
+                    """);
+            System.out.println("""
+                    4. Exit application\s
+                    """);
+            System.out.println("Please select an option: ");
+            command = scanner.nextInt();
+            switch (command) {
+                case 1:
+                    workoutRepo.showWorkouts();
+                    break;
+                case 2:
+                    System.out.println("Log workouts");
+                    break;
+                case 3:
+                    System.out.println("View logged workouts");
+                    break;
+            }
+        } while (command != 4);
+
     }
 
     public static void titleGenerator(String title) {

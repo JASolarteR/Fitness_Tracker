@@ -12,9 +12,7 @@ public class WorkoutRepository {
     }
 
     private void loadDefaultWorkouts() {
-        System.out.println("Loading workouts...");
-
-        Workout fullBodyBlast = createWorkout("Full Body Blast",
+        createWorkout("Full Body Blast",
                 "A comprehensive full-body workout",
                 "Strength",
                 new Exercise[]{
@@ -23,7 +21,7 @@ public class WorkoutRepository {
                         new Exercise("Deadlifts", 10, 3)
                 });
 
-        Workout cardioCircuit = createWorkout("Cardio Circuit",
+        createWorkout("Cardio Circuit",
                 "A high-intensity cardio workout",
                 "Cardio",
                 new Exercise[]{
@@ -32,7 +30,7 @@ public class WorkoutRepository {
                         new Exercise("Burpees", 15, 3)
                 });
 
-        Workout strengthTraining = createWorkout("Strength Training",
+        createWorkout("Strength Training",
                 "A focused strength training workout",
                 "Strength",
                 new Exercise[]{
@@ -41,27 +39,30 @@ public class WorkoutRepository {
                         new Exercise("Bicep Curls", 12, 3)
                 });
 
-        addWorkout(fullBodyBlast);
-        addWorkout(cardioCircuit);
-        addWorkout(strengthTraining);
     }
 
-    private Workout createWorkout(String name, String description, String type, Exercise[] exercises) {
-        Workout workout = new Workout(name, description, type); // Assuming duration is approx. 10 minutes per exercise
+    private void createWorkout(String name, String description, String type, Exercise[] exercises) {
+        Workout workout = new Workout(name, description, type);
         for (Exercise exercise : exercises) {
             workout.addExercise(exercise);
         }
-        addWorkout(workout); // Add the created workout to the repository
-        return workout;
+        addWorkout(workout);
     }
 
-    public boolean addWorkout(Workout workout){
-        if (workouts.containsKey(workout.getId())){
+    public boolean addWorkout(Workout workout) {
+        if (workouts.containsKey(workout.getId())) {
             System.out.println("Workout already exists!");
             return false;
         }
         workouts.put(workout.getId(), workout);
-        System.out.println("Workout added successfully!");
         return true;
     }
+
+    public void showWorkouts() {
+        int index = 1;
+        for (Workout w : workouts.values()) {
+            System.out.printf("%d. %s - %s \n", index++, w.getTitle(), w.getDescription());
+        }
+    }
+
 }
