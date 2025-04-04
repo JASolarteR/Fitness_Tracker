@@ -9,16 +9,13 @@ public class Workout {
     private String id;
     private String title;
     private String description;
-    private String type;
     private List<Exercise> exercises;
     private String notes;
 
-    public Workout(String title, String description,
-                   String type) {
+    public Workout(String title, String description) {
         this.id = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
-        this.type = type;
         this.exercises = new ArrayList<>();
         notes = "Ensure proper form and take 1 minute rest between sets";
     }

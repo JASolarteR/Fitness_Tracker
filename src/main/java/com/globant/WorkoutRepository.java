@@ -15,7 +15,6 @@ public class WorkoutRepository {
     private void loadDefaultWorkouts() {
         createWorkout("Full Body Blast",
                 "A comprehensive full-body workout",
-                "Strength",
                 new Exercise[]{
                         new Exercise("Push Ups", 10, 3),
                         new Exercise("Squats", 15, 3),
@@ -24,7 +23,6 @@ public class WorkoutRepository {
 
         createWorkout("Cardio Circuit",
                 "A high-intensity cardio workout",
-                "Cardio",
                 new Exercise[]{
                         new Exercise("Running", 10, 3),
                         new Exercise("Jump Rope", 100, 3),
@@ -33,7 +31,6 @@ public class WorkoutRepository {
 
         createWorkout("Strength Training",
                 "A focused strength training workout",
-                "Strength",
                 new Exercise[]{
                         new Exercise("Bench Press", 8, 4),
                         new Exercise("Deadlifts", 10, 4),
@@ -42,8 +39,8 @@ public class WorkoutRepository {
 
     }
 
-    private void createWorkout(String name, String description, String type, Exercise[] exercises) {
-        Workout workout = new Workout(name, description, type);
+    private void createWorkout(String name, String description, Exercise[] exercises) {
+        Workout workout = new Workout(name, description);
         for (Exercise exercise : exercises) {
             workout.addExercise(exercise);
         }
