@@ -84,7 +84,8 @@ public class Main {
                     workoutRepo.selectWorkout(scanner);
                     break;
                 case 2:
-                    System.out.println("Log workouts");
+                    scanner.nextLine();
+                    workoutRepo.logWorkout(scanner);
                     break;
                 case 3:
                     System.out.println("View logged workouts");
@@ -102,7 +103,7 @@ public class Main {
 
     public static void titleGenerator(String title, String userName) {
         System.out.println("-----------------------");
-        System.out.printf("%s, %s \n", title, userName);
+        System.out.printf("%s, %s %n", title, userName);
         System.out.println("-----------------------");
     }
 }

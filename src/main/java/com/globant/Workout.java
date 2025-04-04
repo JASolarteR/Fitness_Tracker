@@ -39,6 +39,18 @@ public class Workout {
         return description;
     }
 
+    public List<Exercise> getExercises() {
+        return exercises;
+    }
+
+    public int getTimeTaken(){
+        int timeTaken = 0;
+        for (Exercise e : exercises){
+            timeTaken += e.getTimeTaken();
+        }
+        return timeTaken;
+    }
+
     public void viewWorkout(){
         System.out.printf("Workout Structure: %s%n", title);
         System.out.printf("Description: %s%n%n", description);

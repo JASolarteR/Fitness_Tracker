@@ -4,6 +4,7 @@ public class Exercise {
     private String title;
     private int reps;
     private int sets;
+    private int timeTaken;
 
     public Exercise(String title, int reps, int sets) {
         this.title = title;
@@ -21,5 +22,13 @@ public class Exercise {
 
     public int getSets() {
         return sets;
+    }
+
+    public int getTimeTaken() {
+        return timeTaken;
+    }
+
+    public void setTimeTaken(int timeTaken) {
+        this.timeTaken = timeTaken;
     }
 }

@@ -66,7 +66,7 @@ public class WorkoutRepository {
         }
     }
 
-    public void selectWorkout(Scanner scanner) {
+    public void handleWorkoutSelection(Scanner scanner, boolean isLogging) {
         do {
             showWorkouts();
             System.out.println("Enter the number of the workout to see details, or type 'back' to return:");
@@ -75,14 +75,20 @@ public class WorkoutRepository {
             if (workoutChoice.equalsIgnoreCase("back")) {
                 return;
             }
+
             try {
                 int workoutIndex = Integer.parseInt(workoutChoice);
                 Workout selectedWorkout = getWorkoutByIndex(workoutIndex);
 
                 if (selectedWorkout != null) {
-                    selectedWorkout.viewWorkout();
-                    System.out.printf("%nPress 'Enter' to go back to menu");
-                    scanner.nextLine();
+                    if (isLogging) {
+                        logWorkoutDetails(scanner, selectedWorkout);
+                        return;
+                    } else {
+                        selectedWorkout.viewWorkout();
+                        System.out.printf("%nPress 'Enter' to go back to menu");
+                        scanner.nextLine();
+                    }
                 } else {
                     System.out.println("Invalid selection. Please try again.");
                 }
@@ -90,7 +96,25 @@ public class WorkoutRepository {
                 System.out.println("Please enter a valid number or 'back' to return.");
             }
         } while (true);
+    }
 
+    private void logWorkoutDetails(Scanner scanner, Workout selectedWorkout) {
+        System.out.printf("Logging '%s':%n", selectedWorkout.getTitle());
+        for (Exercise e : selectedWorkout.getExercises()) {
+            System.out.printf("Enter time taken for '%s' (in minutes): %n", e.getTitle());
+            int timeTaken = scanner.nextInt();
+            e.setTimeTaken(timeTaken);
+        }
+        System.out.printf("%nWorkout '%s' logged successfully!%n", selectedWorkout.getTitle());
+        System.out.printf("Total Time: %d minutes%n%n", selectedWorkout.getTimeTaken());
+    }
+
+    public void selectWorkout(Scanner scanner) {
+        handleWorkoutSelection(scanner, false);
+    }
+
+    public void logWorkout(Scanner scanner) {
+        handleWorkoutSelection(scanner, true);
     }
 
     private Workout getWorkoutByIndex(int index) {
