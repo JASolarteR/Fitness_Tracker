@@ -12,8 +12,6 @@ public class Workout {
     private String type;
     private List<Exercise> exercises;
     private String notes;
-    private int totalTime;
-    private int calories;
 
     public Workout(String title, String description,
                    String type) {
@@ -39,5 +37,15 @@ public class Workout {
 
     public String getDescription() {
         return description;
+    }
+
+    public void viewWorkout(){
+        System.out.printf("Workout Structure: %s%n", title);
+        System.out.printf("Description: %s%n%n", description);
+        System.out.println("Exercises: ");
+        for (Exercise e : exercises){
+            System.out.printf("- %s: %d sets of %d reps%n", e.getTitle(), e.getSets(), e.getReps());
+        }
+        System.out.printf("%nNotes: %s%n", notes);
     }
 }

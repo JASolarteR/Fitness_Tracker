@@ -80,7 +80,8 @@ public class Main {
             command = scanner.nextInt();
             switch (command) {
                 case 1:
-                    workoutRepo.showWorkouts();
+                    scanner.nextLine();
+                    workoutRepo.selectWorkout(scanner);
                     break;
                 case 2:
                     System.out.println("Log workouts");
