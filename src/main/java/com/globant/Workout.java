@@ -1,16 +1,19 @@
 package com.globant;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
 public class Workout {
-    private String id;
-    private String title;
-    private String description;
+    private final String id;
+    private final String title;
+    private final String description;
     private List<Exercise> exercises;
-    private String notes;
+    private final String notes;
+    private int timeTaken;
+    private LocalDate workoutDate;
 
     public Workout(String title, String description) {
         this.id = UUID.randomUUID().toString();
@@ -41,11 +44,18 @@ public class Workout {
     }
 
     public int getTimeTaken(){
-        int timeTaken = 0;
         for (Exercise e : exercises){
             timeTaken += e.getTimeTaken();
         }
         return timeTaken;
+    }
+
+    public LocalDate getWorkoutDate() {
+        return workoutDate;
+    }
+
+    public void setWorkoutDate(LocalDate workoutDate) {
+        this.workoutDate = workoutDate;
     }
 
     public void viewWorkout(){

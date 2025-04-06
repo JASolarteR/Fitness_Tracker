@@ -1,5 +1,6 @@
 package com.globant;
 
+import com.globant.users.RegularUser;
 import com.globant.users.UserRepository;
 
 import java.util.Scanner;
@@ -10,6 +11,8 @@ public class Main {
     private static WorkoutRepository workoutRepo = new WorkoutRepository();
 
     public static void main(String[] args) {
+        //TODO: Add admin user flow
+
         int optionSelected;
         do {
             titleGenerator("Welcome to the Personal Fitness Tracker!");
@@ -58,7 +61,7 @@ public class Main {
 
     public static void regularUserMenu() {
         int command;
-        var activeUser = userRepo.getActiveUser();
+        RegularUser activeUser = (RegularUser) userRepo.getActiveUser();
         do {
             titleGenerator("Hello", activeUser.getFirstName() + " " + activeUser.getLastName());
             System.out.println("""
@@ -85,10 +88,13 @@ public class Main {
                     break;
                 case 2:
                     scanner.nextLine();
-                    workoutRepo.logWorkout(scanner);
+                    var loggedWorkout = workoutRepo.logWorkout(scanner);
+                    if(loggedWorkout == null) break;
+                    activeUser.logWorkout(loggedWorkout);
                     break;
                 case 3:
-                    System.out.println("View logged workouts");
+                    scanner.nextLine();
+                    activeUser.viewLoggedWorkouts(scanner);
                     break;
             }
         } while (command != 4);

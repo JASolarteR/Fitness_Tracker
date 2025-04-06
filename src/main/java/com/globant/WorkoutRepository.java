@@ -1,5 +1,9 @@
 package com.globant;
 
+import com.globant.users.RegularUser;
+import com.globant.users.UserRepository;
+
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -63,14 +67,14 @@ public class WorkoutRepository {
         }
     }
 
-    public void handleWorkoutSelection(Scanner scanner, boolean isLogging) {
+    public Workout handleWorkoutSelection(Scanner scanner) {
         do {
             showWorkouts();
             System.out.println("Enter the number of the workout to see details, or type 'back' to return:");
 
             String workoutChoice = scanner.nextLine();
             if (workoutChoice.equalsIgnoreCase("back")) {
-                return;
+                return null;
             }
 
             try {
@@ -78,14 +82,7 @@ public class WorkoutRepository {
                 Workout selectedWorkout = getWorkoutByIndex(workoutIndex);
 
                 if (selectedWorkout != null) {
-                    if (isLogging) {
-                        logWorkoutDetails(scanner, selectedWorkout);
-                        return;
-                    } else {
-                        selectedWorkout.viewWorkout();
-                        System.out.printf("%nPress 'Enter' to go back to menu");
-                        scanner.nextLine();
-                    }
+                    return selectedWorkout;
                 } else {
                     System.out.println("Invalid selection. Please try again.");
                 }
@@ -95,23 +92,33 @@ public class WorkoutRepository {
         } while (true);
     }
 
-    private void logWorkoutDetails(Scanner scanner, Workout selectedWorkout) {
+    private Workout logWorkoutDetails(Scanner scanner, Workout selectedWorkout) {
+        LocalDate workoutDate = LocalDate.now();
         System.out.printf("Logging '%s':%n", selectedWorkout.getTitle());
         for (Exercise e : selectedWorkout.getExercises()) {
             System.out.printf("Enter time taken for '%s' (in minutes): %n", e.getTitle());
             int timeTaken = scanner.nextInt();
             e.setTimeTaken(timeTaken);
         }
+        selectedWorkout.setWorkoutDate(workoutDate);
         System.out.printf("%nWorkout '%s' logged successfully!%n", selectedWorkout.getTitle());
         System.out.printf("Total Time: %d minutes%n%n", selectedWorkout.getTimeTaken());
+        return selectedWorkout;
     }
 
     public void selectWorkout(Scanner scanner) {
-        handleWorkoutSelection(scanner, false);
+        var selectedWorkout = handleWorkoutSelection(scanner);
+        if(selectedWorkout == null) return;
+        selectedWorkout.viewWorkout();
+        System.out.printf("%nPress 'Enter' to go back to menu");
+        scanner.nextLine();
+
     }
 
-    public void logWorkout(Scanner scanner) {
-        handleWorkoutSelection(scanner, true);
+    public Workout logWorkout(Scanner scanner) {
+        var selectedWorkout = handleWorkoutSelection(scanner);
+        if(selectedWorkout == null) return null;
+        return logWorkoutDetails(scanner, selectedWorkout);
     }
 
     private Workout getWorkoutByIndex(int index) {

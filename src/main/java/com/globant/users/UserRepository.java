@@ -16,6 +16,8 @@ public class UserRepository {
     }
 
     public boolean registerUser(String firstName, String lastName, String email, String password) {
+        //TODO: Add input validation and error handling
+
         if (users.containsKey(email)) {
             System.out.println("Email already exists!");
             return false;
@@ -30,6 +32,8 @@ public class UserRepository {
     }
 
     public boolean loginUser(String email, String password) {
+        //TODO: Add input validation and error handling
+
         if (!users.containsKey(email)) {
             System.out.println("Email not found!");
             return false;
@@ -48,7 +52,6 @@ public class UserRepository {
     }
 
     public boolean validatePassword(String password) {
-        String MAX_LENGTH = "8";
         String ONE_DIGIT = "(?=.*[0-9])";
         String LOWER_CASE = "(?=.*[a-z])";
         String UPPER_CASE = "(?=.*[A-Z])";
