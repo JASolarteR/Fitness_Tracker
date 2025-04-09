@@ -3,24 +3,18 @@ package com.globant.users;
 import java.util.UUID;
 
 public class User {
-    private final String id;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-    private boolean isAdmin;
+    private UserRole role;
 
-    public User(String firstName, String lastName, String email, String password, boolean isAdmin) {
-        this.id = UUID.randomUUID().toString();
+    public User(String firstName, String lastName, String email, String password, UserRole role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.isAdmin = isAdmin;
-    }
-
-    public String getId() {
-        return id;
+        this.role = role;
     }
 
     public String getFirstName() {
@@ -39,13 +33,17 @@ public class User {
         return password;
     }
 
+    public boolean isAdmin() {
+        return role == UserRole.ADMIN;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", isAdmin=" + isAdmin +
+                ", role=" + role +
                 '}';
     }
 }

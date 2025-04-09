@@ -1,57 +1,61 @@
 package com.globant.users;
 
-import com.globant.Exercise;
-import com.globant.Workout;
+import com.globant.workouts.Exercise;
+import com.globant.workouts.Workout;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
 public class RegularUser extends User {
     private List<Workout> loggedWorkouts;
 
-    public RegularUser(String firstName, String lastName, String email, String password, boolean isAdmin) {
-        super(firstName, lastName, email, password, isAdmin);
+    public RegularUser(String firstName, String lastName, String email, String password) {
+        super(firstName, lastName, email, password, UserRole.REGULAR);
         loggedWorkouts = new ArrayList<>();
     }
 
     public void logWorkout(Workout workout) {
-        //TODO: Add error handling
+        if (workout == null) {
+            System.out.println("Invalid workout!");
+            return;
+        }
         loggedWorkouts.add(workout);
     }
 
-    public void viewLoggedWorkouts(Scanner scanner) {
-        do {
-            System.out.println("Workout History (Sorted by Date Descending):");
-            //TODO: Sort by date descending
-            for (Workout w : loggedWorkouts) {
-                System.out.printf("%d. Date: %s%n", loggedWorkouts.indexOf(w) + 1, w.getWorkoutDate());
-                System.out.printf("Workout: %s%n", w.getTitle());
-            }
+    private void viewLoggedWorkouts() {
+        if (loggedWorkouts.isEmpty()) {
+            System.out.println("No logged workouts found.");
+            return;
+        }
 
+        loggedWorkouts.sort(Comparator.comparing(Workout::getWorkoutDate).reversed());
+        System.out.println("Workout History (Sorted by Date Descending):");
+        for (int i = 0; i < loggedWorkouts.size(); i++) {
+            Workout w = loggedWorkouts.get(i);
+            System.out.printf("%d. Date: %s - Workout: %s%n", i + 1, w.getWorkoutDate(), w.getTitle());
+        }
+
+    }
+
+    public void handleWorkoutDetailSelection(Scanner scanner) {
+        while (true) {
+            viewLoggedWorkouts();
             System.out.println("Enter the number of the workout to see details, or type 'back' to return:");
-
             String workoutChoice = scanner.nextLine();
             if (workoutChoice.equalsIgnoreCase("back")) {
                 return;
             }
-
             try {
                 int workoutIndex = Integer.parseInt(workoutChoice) - 1;
-                Workout selectedWorkout = loggedWorkouts.get(workoutIndex);
-
-                if (selectedWorkout != null) {
-                    showWorkout(selectedWorkout);
-                    System.out.println("Press 'ENTER' to go back");
-                    scanner.nextLine();
-                } else {
-                    System.out.println("Invalid selection. Please try again.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid number or 'back' to return.");
+                showWorkout(loggedWorkouts.get(workoutIndex));
+                System.out.println("Press 'ENTER' to go back");
+                scanner.nextLine();
+            } catch (IndexOutOfBoundsException | NumberFormatException e) {
+                System.out.println("Invalid selection. Please try again.");
             }
-        } while (true);
-
+        }
     }
 
     public void showWorkout(Workout loggedWorkout) {
