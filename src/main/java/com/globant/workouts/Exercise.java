@@ -1,15 +1,16 @@
-package com.globant;
+package com.globant.workouts;
 
 public class Exercise {
-    private String title;
-    private int reps;
-    private int sets;
+    private final String title;
+    private final int reps;
+    private final int sets;
     private int timeTaken;
 
     public Exercise(String title, int reps, int sets) {
         this.title = title;
         this.reps = reps;
         this.sets = sets;
+        this.timeTaken = 0;
     }
 
     public String getTitle() {

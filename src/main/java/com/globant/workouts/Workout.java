@@ -1,9 +1,8 @@
-package com.globant;
+package com.globant.workouts;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 public class Workout {
@@ -21,6 +20,7 @@ public class Workout {
         this.description = description;
         this.exercises = new ArrayList<>();
         notes = "Ensure proper form and take 1 minute rest between sets";
+        this.timeTaken = 0;
     }
 
     public String getId() {
@@ -43,7 +43,8 @@ public class Workout {
         return exercises;
     }
 
-    public int getTimeTaken(){
+    public int getTimeTaken() {
+        timeTaken = 0;
         for (Exercise e : exercises){
             timeTaken += e.getTimeTaken();
         }
@@ -58,13 +59,11 @@ public class Workout {
         this.workoutDate = workoutDate;
     }
 
-    public void viewWorkout(){
+    public void viewWorkout() {
         System.out.printf("Workout Structure: %s%n", title);
         System.out.printf("Description: %s%n%n", description);
         System.out.println("Exercises: ");
-        for (Exercise e : exercises){
-            System.out.printf("- %s: %d sets of %d reps%n", e.getTitle(), e.getSets(), e.getReps());
-        }
+        exercises.forEach(e -> System.out.printf("- %s: %d sets of %d reps%n", e.getTitle(), e.getSets(), e.getReps()));
         System.out.printf("%nNotes: %s%n", notes);
     }
 }
